@@ -1,0 +1,127 @@
+;(function(Salary) {
+
+	Salary.Carousel = function(container, options) {
+        console.log(container, options);
+        if(!container) {
+            return false;
+        }
+        // callback init
+		var callback = function() {};
+
+        // element init
+        this.container = container;
+        
+        this.slideBelt = Salary.lib.getChiildNode(this.container, options.slideBelt)[0];
+        this.slides = Salary.lib.getChiildNode(this.slideBelt, options.slides);
+        this.buttonPrev = Salary.lib.getChiildNode(this.container, options.prevButton)[0];
+        this.buttonNext = Salary.lib.getChiildNode(this.container, options.nextButton)[0];
+        this.paginations = Salary.lib.getChiildNode(this.container, options.paginations)[0] || {};
+
+        // options init
+        this.options = options;
+        this.callback = options.callback || callback;
+        this.width = 309 || 0;
+        this.index = 1;
+
+        // slide init
+        this.total = this.slides.length;
+        this.startMargin = 0;
+        this.endMargin = 0;
+        this.position = 0;
+        this.page;
+        
+        this.init();
+	}
+	Salary.Carousel.prototype = {
+        init : function() {
+            var self = this;
+            // this.startMargin = -(this.width);
+            this.endMargin = -((this.total - 1) * this.width);
+            Salary.lib.setAttr(this.slideBelt, {
+                'style' : 'width:' + (this.width * this.total) + 'px; margin-left:' + this.startMargin + 'px',
+            });
+            Salary.lib.addEventListener(this.buttonPrev, 'click', function() {
+                self.direction(-1);
+            });
+            Salary.lib.addEventListener(this.buttonNext, 'click', function() {
+                self.direction(1);
+            });
+            if(this.isPaginations === true) {
+                this.createPaginations();
+            }
+            if(this.index > 0) {
+                this.setPosition(this.index);
+            }
+            if(this.paginations) {
+                this.createPaginations();
+            }
+        },
+        createPaginations : function() {
+            var em = document.createElement('em');
+            var emText = document.createTextNode('1');
+            em.appendChild(emText);
+            var total = document.createTextNode(' / ' +this.total);
+            this.paginations.appendChild(em);
+            this.paginations.appendChild(total);
+            this.page = em;
+        },
+        getStyle : function(element) {
+            return window.getComputedStyle ? getComputedStyle(element, null) : element.currentStyle;
+        },
+        getMargin : function(element) {
+            return parseInt(this.getStyle(element)['margin-left'], 0);
+        },
+        isAtEnd : function() {
+            return this.position === this.endMargin;
+        },
+        isAtStart : function() {
+            return this.position === this.startMargin;
+        },
+        direction : function(direction) {
+            var self = this;
+            var isButtonBack = (direction == -1) ? true : false;
+            if(isButtonBack && this.isAtStart()) {
+                // isStart
+                this.endPosition();
+            } else if(!isButtonBack && this.isAtEnd()) {
+                // isEnd
+                this.firstPosition();
+            } else {
+                // slide
+                this.slide((isButtonBack ? '+' : '-'));
+            }
+        },
+        slide : function(direction, callback) {
+            if(direction == '-') {
+                this.index++;
+            } else {
+                this.index--;
+            }
+            this.setPage(this.index);
+            var margin = Number(direction + this.width) + this.position;
+            this.slideBelt.style['margin-left'] = margin + 'px';
+            this.position = margin;
+        },
+        setPosition : function(index) {
+            this.position = -((index - 1) * this.width);
+            this.slideBelt.style['margin-left'] = this.position + 'px';
+        },
+        firstPosition : function(index) {
+            this.position = this.startMargin;
+            this.slideBelt.style['margin-left'] = this.position + 'px';
+            this.index = 1
+            this.setPage(this.index);
+        },
+        endPosition : function() {
+            this.position = this.endMargin;
+            this.slideBelt.style['margin-left'] = this.position + 'px';
+            this.index = this.total
+            this.setPage(this.index);
+            
+        },
+        setPage : function(index) {
+            this.page.innerText = index;
+        }
+	}
+	
+}(window.Salary = window.Salary || {}));

@@ -1,0 +1,88 @@
+;(function($) {
+        
+    $.Compare = function(element) {
+
+        if(!element) {
+            return false;
+        }
+        var compare = this;
+
+        var container = element,
+            progress = container.querySelectorAll('.progress'),
+            value = container.querySelectorAll('.value'),
+            type = container.getAttribute('data-type');
+
+        if(!type) {
+            return;
+        }
+
+        compare.initSalary = function() {
+
+            var value1 = this.getValue(value[0]),
+                value2 = this.getValue(value[1]),
+                percent = Math.round((value2 / value1) * 100);
+
+            Salary.lib.setAttr(progress[0], {
+                'style' : 'height:100%'
+            })
+            Salary.lib.setAttr(progress[1], {
+                'style' : 'height:' + percent + '%'
+            })
+
+        }
+        compare.initYear = function() {
+
+            var total = [];
+
+            for(var i=0, length=value.length; i<length; i++) {
+                var year = value[i].textContent.split('년'),
+                    month = year[1].split('개월')[0].replace(/ /g, ''),
+                    percent = Math.round((year[0] * 12) + ((month / 10) * 12));
+
+                total.push(percent);                
+            }
+            
+            Salary.lib.setAttr(progress[0], {
+                'style' : 'height:100%'
+            })
+            Salary.lib.setAttr(progress[1], {
+                'style' : 'height:' + Math.round((total[1] / total[0]) * 100) + '%'
+            })
+            
+
+        }
+        compare.getValue = function(value) {
+
+            return parseInt(value.textContent.replace(/\,/g,''), 10);
+            
+		}
+
+        switch (type) {
+            case 'salary':
+                compare.initSalary();
+                break;
+            case 'year':
+                compare.initYear();
+                break;
+        }
+        
+
+    }
+
+    $.fn.Compare = function(options) {
+        return this.each(function() {
+            if (undefined == $(this).data('Compare')) {
+                var plugin = new $.Compare(this, options);
+                $(this).data('Compare', plugin);
+            }
+        });
+    }
+
+    var compare = $('.chart-bar-compare');
+
+    if(compare.length > 0) {
+        compare.Compare();
+    }
+	
+})(jQuery);
+

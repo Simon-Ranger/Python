@@ -3,7 +3,7 @@ This file contains in the following order:
 1. Lambda:
     General Use
     Functional Use
-2. Map & Filler
+2. Map & Filter
 3. Generators & Decorators
 4. Itertools
 5. Exercise

@@ -82,14 +82,15 @@ def collectedInfo(soup: bs) -> list[dict]:
 # Dumping the found data into an Excel Sheet or printing in table format
 def dataDump():
     """
-    Goal is to have all the data either print out in table format or saved to an excel file
+    Goal is to have all the data either print out in table format or saved to an Excel file
     """
-    pass
+    columns = ["Company Name", "Job Title", "Required Experience", "Required Education"]
+    df = pd.DataFrame(data, columns=columns)
+    print(df)
 
 
 if __name__ == '__main__':
     companyNames()
     jobTitles()
     salaryOptions()
-    dataDump()
     data = collectedInfo(soup)

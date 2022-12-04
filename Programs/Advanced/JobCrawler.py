@@ -1,96 +1,67 @@
 # Imports
-import re
-import pandas as pd
-from contextlib import suppress as sr
-import requests
+from requests import get
 from bs4 import BeautifulSoup as bs
-
-# Creating the URL link as a variable & printing it as text
-number = []
-site = requests.get(f"https://www.jobkorea.co.kr/Search/?stext=english&local=N000&Page_No={number}")
-
-# Parsing the url to BeautifulSoup
-soup = bs(site.content, "html.parser")
-print(f"{soup.prettify()}")
+from contextlib import suppress as sr
+from pandas import DataFrame as df
+from openpyxl.workbook import Workbook
 
 
-# Locating all the Company names
-def companyNames():
-    """
-    Goal is to print a list of the companies
-    """
-    print(f"\nCompany Names are:")
-    for company in soup.find_all("div", class_="post-list-corp"):
-        try:
-            companies = company.a.text
-            print(f"{companies}")
-        except AttributeError:
-            return f"No more information on a tags found..."
+def extract(page):
+    # Grabs the user agents being used
+    headers = {f"User Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/108.0.0.0 Safari/537.36"}
+    # Sets the website being scraped
+    url = f"https://www.jobkorea.co.kr/Search/?stext=english&local=N000&focusTab=&focusGno=40303904&tabType=recruit" \
+          f"&Page_No={page}"
+
+    # Grabs the url and header, letting data be taken
+    request = get(url, headers)
+
+    # Parses the data
+    soup = bs(request.content, "html.parser")
+    return soup
 
 
-# Locating the title of the job ad
-def jobTitles():
-    """
-    Goal is to have it print all the job titles, then under it the information within the ad
-    """
-    print(f"\nJob Titles are:")
-    for job in soup.find_all("div", class_="post-list-info"):
-        try:
-            jobs = job.a.text
-            info = job.span.text
-            print(f"{jobs.strip()}\n{info.strip()}")
-        except AttributeError:
-            return f"No more information on a tags found..."
-
-
-# Locating the general salary options of the companies
-def salaryOptions():
-    """
-    the ads themselves don't give the salary offered, this is another part of the site that lets you select what salary
-    to search. Goal is to display the ads available for each salary range
-    """
-    print(f"\nSalary Options are:")
-    salary = soup.find_all(text=re.compile("만원.*"))
-    [print(f"{cost.strip()}") for cost in salary]
-    return f"{salary}"
-
-
-def collectedInfo(soup: bs) -> list[dict]:
-    data = []
+def transform(soup):
+    # Runs an exception check
     with sr(Exception):
-        posts = soup.select("li.list-post")
+        # Finds all the divs under the class "post" within the url
+        divs = soup.find_all("div", {"class": "post"})
+    # Loops through the found class "post" for specific data
+    for detail in divs:
+        with sr(Exception):
+            # Grabs the company name
+            title = detail.find("a").text.strip()
+            # Grabs the job title
+            company = detail.find("div", {"class": "post-list-info"}).a.text.strip()
+            # Grabs general requirements of the job
+            exp = detail.find("p", {"class": "option"}).text.strip().replace("\n", "")
 
-        for post in posts:
-            with sr(Exception):
-                companyName = post.select_one(".name.dev_view").text
-                titleName = post.select_one(".title.dev-view").text.strip()
-                p = post.select_one("p")
-                experience = p.select_one(".exp")
-                education = p.select_one(".edu")
+            # Puts the data into a dictionary
+            jobs = {
+                "title": title,
+                "company": company,
+                "exp": exp
+            }
 
-                info = {
-                    "Company Name": companyName,
-                    "Job Title": titleName,
-                    "Required Experience": experience,
-                    "Required Education": education
-                }
-
-                data.append(info)
-        return data
-
-
-# Dumping the found data into an Excel Sheet or printing in table format
-def dataDump():
-    """
-    Goal is to have all the data either print out in table format or saved to an Excel file
-    """
-    columns = ["Company Name", "Job Title", "Required Experience", "Required Education"]
-    df = pd.DataFrame(data, columns=columns)
-    print(df)
+            # Joins the data into a list
+            data.append(jobs)
+    return
 
 
 if __name__ == '__main__':
-    companyNames()
-    jobTitles()
-    salaryOptions()
-    data = collectedInfo(soup)
+    # The list that has the data added to
+    data = []
+
+    # Loops through the 1st page of the site, grabbing the specified amount of jobs per page
+    for i in range(0, 10, 5):
+        c = extract(0)
+        transform(c)
+
+    # Converts the data from a list into a data frame
+    frame = df(data)
+    # Doesn't show company information when printing
+    print(frame)
+
+    # Saving the data to an Excel (.csv) file
+    frame.to_excel("JobKorea.xlsx", index=False)

@@ -14,7 +14,7 @@ This is a general collection of projects I found online to help master python as
 
 + Mad Lib ✅
   - get input data of various words (nouns, adjectives, etc.)
-  - use strings, variables and concatentation to manipulate the data
+  - use strings, variables and concatenation to manipulate the data
 
 + Number Guessing ✅
   - make the user guess a number between x and y
@@ -31,7 +31,7 @@ This is a general collection of projects I found online to help master python as
   - user rolls the dice and a number between 1-6 will appear
   - ask the user if they want to roll again
 
-+ Hangman ✅ (Used someones design from online to do this)
++ Hangman ✅ (Used someone's design from online to do this)
   - get users to enter random letters having a max limit
   - create a list of words the user can grab from
   - check to see if the input is a single letter or letter is in the word.
@@ -52,7 +52,7 @@ This is a general collection of projects I found online to help master python as
   - ask the user to input place, action, etc. with a story auto built from it
 
 + Leap Year Checker ✅
-  - check if its a leap year
+  - check if it's a leap year
   - use functions to read the pattern of leap years
 
 + Calculator
@@ -99,7 +99,7 @@ This is a general collection of projects I found online to help master python as
 
 + Alarm Clock
   - option 1: have a regular specified time for it to go off
-  - option 2: set up a txt file with random youtube links, have it play when time goes off
+  - option 2: set up a txt file with random YouTube links, have it play when time goes off
 
 + Steganography
   - encode/decode images
@@ -152,7 +152,7 @@ This is a general collection of projects I found online to help master python as
   - let user search through documents
 
 + Web Crawler ✅
-  - use request, beautifulsoup, selienum and scrapy (can just select 1 if you want)
+  - use request, beautifulsoup, selenium and scrapy (can just select 1 if you want)
   - use pandas to format it into table format
   - use multi-threading (optional)
 
@@ -168,13 +168,13 @@ This is a general collection of projects I found online to help master python as
 + Expense Tracker
   - Use Pandas, PySimpleGUI and Matplotlib
   - let the user track expenses
-  - make it so the expenses can be statistically analysied
+  - make it so the expenses can be statistically analysed
 
 + Regex Query Tool
   - highlights all matching patterns used by regex within text from the user
 
 + Quiz Application
-  - create a questionaire
+  - create a questionnaire
   - set a timer for the tests
   - make it so users can create an account, some being admin
   - user answers the questions and if wrong given the answer

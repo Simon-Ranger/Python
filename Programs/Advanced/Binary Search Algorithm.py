@@ -11,14 +11,12 @@ Created a list of numbers determined by the user input with every succeeding num
 them. Checks if user input is included and removed the half that wasn't.
 """
 
-# Imports required
 
-# Setting the global variable
-nums = []
+# Imports required
 
 
 # Determining the Numbers
-def determiningNumbers():
+def determiningNumbers() -> object:
     # Asking user for number of entries
     ask = int(input(f"How many numbers do you want to enter? "))
     int(input(f"Enter {ask} numbers: "))
@@ -38,9 +36,11 @@ def determiningNumbers():
     print(f"\nThe list is: ")
     [print(f"{nums[i]}") for i in range(ask)]
 
+    return
+
 
 # Searching for the Number
-def numberSearch(nums):
+def numberSearch(nums) -> str:
     # Asking user for number to search
     int(input(f"Enter a number to search: "))
 
@@ -53,7 +53,8 @@ def numberSearch(nums):
 
     # Looping through the variables
     for first in range(last + 1):
-        if nums[middle] < user: first = middle + 1
+        if nums[middle] < user:
+            first = middle + 1
         elif nums == user:
             print(f"{user} Found at position: {middle + 1}")
             check = 1
@@ -66,3 +67,11 @@ def numberSearch(nums):
     if check != 1: print(f"{user} is Not Found in list")
 
     # Removes the half that wasn't found and returns the found amount
+
+
+if __name__ == '__main__':
+    # Setting the global variable
+    nums = []
+
+    determiningNumbers()
+    numberSearch()

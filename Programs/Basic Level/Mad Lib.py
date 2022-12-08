@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 23rd 2022
+
 """
 This is a basic program about letting the user create their own story using words and sentences of their choice.
 

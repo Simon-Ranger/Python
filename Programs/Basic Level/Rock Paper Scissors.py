@@ -1,3 +1,18 @@
+# Created by Simon Ranger : November 15th 2022
+
+"""
+This project is a basic game of rock, paper, scissors.
+
+How to Use:
+1. When prompt, choose a number between 0 and 2
+
+Desired Output:
+Users can pretend to buy a meal from pizza hut by going through the same steps they would on the real site, then
+if wanting can go to the real site and actually order it on there.
+
+NOTE: the game print design was not me, found it online somewhere and liked it.
+"""
+
 import random
 
 

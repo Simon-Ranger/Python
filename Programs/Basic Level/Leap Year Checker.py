@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 17th 2022
+
 """
 A very simple calculator to determine if it was a leap year or not
 

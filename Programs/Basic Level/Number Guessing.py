@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 3rd 2022
+
 """
 This is a basic but fun number guessing game that the user can play with.
 

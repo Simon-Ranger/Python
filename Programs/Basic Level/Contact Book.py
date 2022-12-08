@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 15th 2022
+
 """
 This project is a simple Contact Book that can store, edit, search and remove contacts.
 

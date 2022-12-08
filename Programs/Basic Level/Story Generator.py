@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 17th 2022
+
 """
 This is a basic program about letting the user create their own story that will randomise into something completely
 different each time.

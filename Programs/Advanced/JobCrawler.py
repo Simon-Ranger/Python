@@ -1,9 +1,21 @@
+# Created by Simon Ranger : November 15th 2022
+
+"""
+This is a more advanced project that is meant to look through specific jobs on a job site.
+
+How to Use:
+1. Change the link to the site you want to grab the data from.
+2. When getting the results check the Excel file incase the data is too long for the output
+
+Desired Output:
+Grabs the specified information from the specified job site, giving the results in the output as well as an Excel file.
+"""
+
 # Imports
 from requests import get
 from bs4 import BeautifulSoup as bs
 from contextlib import suppress as sr
 from pandas import DataFrame as df
-from openpyxl.workbook import Workbook
 
 
 def extract(page):
@@ -16,7 +28,6 @@ def extract(page):
 
     # Grabs the url and header, letting data be taken
     request = get(url, headers)
-
     # Parses the data
     soup = bs(request.content, "html.parser")
     return soup
@@ -64,4 +75,5 @@ if __name__ == '__main__':
     print(frame)
 
     # Saving the data to an Excel (.csv) file
+    print(f"Printing to excel...")
     frame.to_excel("JobKorea.xlsx", index=False)

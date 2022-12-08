@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 23rd 2022
+
 """
 This project is a basic to advanced app that lets you connect to the pizza hut website without actually typing anything
 into the browser itself.
@@ -14,7 +16,7 @@ if wanting can go to the real site and actually order it on there.
 
 # The imports required
 import tkinter as tk
-from pillow import Image, ImageTk
+from PIL import Image, ImageTk
 import webbrowser
 import requests
 

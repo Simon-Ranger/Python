@@ -1,3 +1,15 @@
+"""
+This project is a simple and fun game of hangman.
+
+How to Play:
+1. When asked try to choose a letter or word
+
+Desired Output:
+Lets you vs the computer in a game of hangman
+
+NOTE: the hangman print design is not by me, found it online and loved it...can't remember from where
+"""
+
 import random
 
 # List of words for the game....can be changed to anything

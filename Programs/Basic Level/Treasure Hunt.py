@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 3rd 2022
+
 """
 This is a basic text-based style game the user can interact with!
 

@@ -1,3 +1,5 @@
+# Created by Simon Ranger : November 23rd 2022
+
 """
 This is a VERY basic dice game where the user can try and guess what the dice will roll
 """

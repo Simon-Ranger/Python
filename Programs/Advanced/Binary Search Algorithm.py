@@ -1,10 +1,32 @@
 # Created by Simon Ranger : December 8th 2022
 
 """
-A more advanced project designed around binary search algorithm.
+Uses the binary tree module to automate everything into a visual display.
 
 How to Use:
 1. Follow input directions when prompt.
+2. Select a number between 0 - 9
+
+Desired Output:
+Prints out a binary tree for the specified number from the user
+"""
+
+# Imports required
+from binarytree import bst
+
+
+def binaryTree() -> None:
+    # Asking user for number of entries
+    user = int(input(f"Enter the height you want:\n"))
+    search = bst(height=user)
+    print(f"Binary Search Tree of your choice is:\n{search}")
+
+
+"""
+Creates its own binary search without the module
+
+How to Use:
+1. Follow the prompt
 
 Desired Output:
 Created a list of numbers determined by the user input with every succeeding number being a difference of 2 between
@@ -12,66 +34,22 @@ them. Checks if user input is included and removed the half that wasn't.
 """
 
 
-# Imports required
+def binarySearchAlgorithm(user: list[int], amount: int, isSorted: bool = False) -> int:
+    middle = len(user) // 2
 
+    if not isSorted: user = sorted(user)
+    result = user[middle]
 
-# Determining the Numbers
-def determiningNumbers() -> object:
-    # Asking user for number of entries
-    ask = int(input(f"How many numbers do you want to enter? "))
-    int(input(f"Enter {ask} numbers: "))
+    if len(user) == 1:
+        if user[0] == result: return 0
+        else: return -1
 
-    # Looping the user input to insert the numbers
-    [nums.insert(i, int(input())) for i in range(ask)]
-
-    # Looping through the numbers with adding/subtracting the value
-    for i in range(ask - 1):
-        for x in range(ask - i - 1):
-            if nums[x] > nums[x + 1]:
-                amount = nums[x]
-                nums[x] = nums[x + 1]
-                nums[x + 1] = amount
-
-    # Print and Loop the list of numbers
-    print(f"\nThe list is: ")
-    [print(f"{nums[i]}") for i in range(ask)]
-
-    return
-
-
-# Searching for the Number
-def numberSearch(nums) -> str:
-    # Asking user for number to search
-    int(input(f"Enter a number to search: "))
-
-    # Setting the variables
-    first = 0
-    last = nums - 1
-    middle = int(first + last) / 2  # making the numbers differ by 2
-    user = int(input())
-    check = 0
-
-    # Looping through the variables
-    for first in range(last + 1):
-        if nums[middle] < user:
-            first = middle + 1
-        elif nums == user:
-            print(f"{user} Found at position: {middle + 1}")
-            check = 1
-            break
-        else:
-            last = middle - 1
-
-        return f"{last}"
-
-    if check != 1: print(f"{user} is Not Found in list")
-
-    # Removes the half that wasn't found and returns the found amount
+    if result == amount: return amount
+    elif result < amount: return binarySearchAlgorithm(user[:middle - 1], amount, True)
+    else: return binarySearchAlgorithm(user[:middle + 1], amount, True)
 
 
 if __name__ == '__main__':
-    # Setting the global variable
-    nums = []
+    binaryTree()
+    print(binarySearchAlgorithm(user=[30], amount=3, isSorted=True))
 
-    determiningNumbers()
-    numberSearch()

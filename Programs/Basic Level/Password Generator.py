@@ -16,7 +16,7 @@ import string
 
 if __name__ == "__main__":
     characters = f"{string.ascii_letters}{string.punctuation}{string.digits}{string.hexdigits}{string.octdigits}"
-    password = "".join(random.choice(characters) for i in range(random.randint(16, 200)))
+    password = "".join(random.choice(characters) for i in range(random.randint(16, 124)))
 
     print(f"Your new randomized password is ====> {password}")
 

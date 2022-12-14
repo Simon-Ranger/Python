@@ -18,10 +18,10 @@ from sqlite3 import Error, Connection
 import time as t
 
 
-def createConnection(file) -> Connection:
+def createConnection() -> Connection:
     # setting up the connection
     try:
-        connect = sqlite3.connect(file)
+        connect = sqlite3.connect(r"C:\Users\General\Desktop\Codes\Python\Programs\Advanced\QuizDatabase.db")
         connect.cursor()
         return connect
     except Error as e:
@@ -36,9 +36,7 @@ def creatingTable(connect, table):
         print(e)
 
 
-def main():
-    # path of the database
-    database = r"C:\sqlite\db\QuizDatabase.db"
+def main() -> tuple:
 
     # creating the database tables
     multiplechoice = """
@@ -49,7 +47,7 @@ def main():
     Answer TEXT NOT NULL,
     Start_time TEXT,
     End_time TEXT
-    );
+    )
     """
 
     truefalse = """
@@ -60,7 +58,7 @@ def main():
     Answer TEXT NOT NULL,
     Start_time TEXT,
     End_time TEXT
-    );
+    )
     """
 
     # inserting the data for the tables
@@ -72,7 +70,7 @@ def main():
     Answer,
     Start_time,
     End_time
-    );
+    )
     """
 
     values = [
@@ -212,7 +210,7 @@ def main():
     ]
 
     # connecting tables with database
-    connection = createConnection(database)
+    connection = createConnection()
 
     if connection:
         creatingTable(connection, multiplechoice)

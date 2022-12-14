@@ -111,5 +111,3 @@ if __name__ == "__main__":
     # give the user a choice of multiple choice or true/false and choice to exit the program
     choice = int(input("\nPlease select from the options below:\n1. Multiple Choice Quiz\n2. True or False Quiz\n"
                        "3. Exit\nEnter Number Here: "))
-
-

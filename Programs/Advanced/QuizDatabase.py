@@ -10,7 +10,6 @@ ID of the questions
 text of the questions
 answer for the questions
 how long it took to complete the quiz
-the total score (how many answers they got right out of the total amount)
 """
 
 # importing the database
@@ -39,7 +38,7 @@ def creatingTable(connect, table):
 
 def main():
     # path of the database
-    database = r"C:\sqlite\db\pythonsqlite.db"
+    database = r"C:\sqlite\db\QuizDatabase.db"
 
     # creating the database tables
     multiplechoice = """

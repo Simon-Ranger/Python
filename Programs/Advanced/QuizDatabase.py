@@ -19,17 +19,17 @@ from sqlite3 import Error, Connection
 import time as t
 
 
-def createConnection(file) -> Connection:
+def createConnection() -> Connection:
     # setting up the connection
     try:
-        connect = sqlite3.connect(file)
+        connect = sqlite3.connect(r"C:\Users\General\Desktop\Codes\Python\Programs\Advanced\QuizDatabase.db")
         connect.cursor()
         return connect
     except Error as e:
         print(e)
 
 
-def creatingTable(connect, table):
+def creatingTable(connect, table) -> None:
     try:
         connecting = connect.cursor()
         connecting.execute(table)
@@ -37,10 +37,7 @@ def creatingTable(connect, table):
         print(e)
 
 
-def main():
-    # path of the database
-    database = r"C:\sqlite\db\pythonsqlite.db"
-
+def main() -> str | tuple:
     # creating the database tables
     multiplechoice = """
     CREATE TABLE IF NOT EXISTS questions (
@@ -50,7 +47,7 @@ def main():
     Answer TEXT NOT NULL,
     Start_time TEXT,
     End_time TEXT
-    );
+    )
     """
 
     truefalse = """
@@ -61,7 +58,7 @@ def main():
     Answer TEXT NOT NULL,
     Start_time TEXT,
     End_time TEXT
-    );
+    )
     """
 
     # inserting the data for the tables
@@ -73,7 +70,7 @@ def main():
     Answer,
     Start_time,
     End_time
-    );
+    )
     """
 
     values = [
@@ -213,7 +210,7 @@ def main():
     ]
 
     # connecting tables with database
-    connection = createConnection(database)
+    connection = createConnection()
 
     if connection:
         creatingTable(connection, multiplechoice)

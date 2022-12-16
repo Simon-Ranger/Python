@@ -1,4 +1,4 @@
-,GoodsOfServices,Prices,Dates,ExpenseType
-0,apple,1.0,2022-12-15,Food
-1,soap,1.0,2022-12-15,Household
-2,bus,2.0,2022-12-15,Travel
+,GOODS_OR_SERVICES,PRICES,DATES,EXPENSE_TYPES
+0,apple,1.0,2022-12-16 08:57:20.380738,Food
+1,soap,2.0,2022-12-16 08:57:36.814405,Household
+2,bus,3.0,2022-12-16 08:57:47.107031,Travel

@@ -12,97 +12,130 @@ displayed in a file and the terminal.
 """
 
 # Imports required
-from pandas import DataFrame as df, read_csv, DataFrame
-import numpy as np
-from matplotlib import pyplot as plt
-from datetime import date
+from pandas import DataFrame as df, read_csv
+# import numpy as np
+from datetime import datetime
+import matplotlib.pyplot as plt
 
-# create empty lists
-GoodsOrServices: list | str = []
-Prices: list | float = []
-Dates: list | date = []
-ExpenseType: list | str = []
-
-
-# funct adding data to lists
-def addingData(goodsOrServices: str, prices: int | float, dates, expenseType: str) -> None:
-    # appending to the lists
-    GoodsOrServices.append(goodsOrServices)
-    Prices.append(prices)
-    Dates.append(dates)
-    ExpenseType.append(expenseType)
+# Creating empty lists
+GOODS_OR_SERVICES: list = []
+PRICES: list = []
+DATES: list = []
+EXPENSE_TYPES: list = []
 
 
-def reportData() -> DataFrame:
-    expenseType = ""
+def adding_data(goods_or_services: str, prices: float, dates: str, expense_types: str) -> None:
+    """
+    Simply just appends everything together to be used throughout the script
 
-    # creating the dataframe
+    Args:
+        goods_or_services: str : the item or service the user inputs
+        prices: float : the cost of the goods_or_services
+        dates: str : when the data was put into the file
+        expense_types: str : category choice (food, household, travel, etc.)
+
+    Returns:
+        None
+    """
+
+    # Appending variables to the empty lists
+    GOODS_OR_SERVICES.append(goods_or_services)
+    PRICES.append(prices)
+    DATES.append(dates)
+    EXPENSE_TYPES.append(expense_types)
+
+
+def main() -> None:
+    """
+    This is the main part of the script that runs all the menu options and user inputs. The while loop with if
+    statements runs through the user choices, allocating the type of expense depending on the selected choice, the
+    last if statement lets the user input the data where prompt.
+
+    Args:
+
+    Returns:
+        None
+    """
+    # Creating the main menu
+    truth = -1
+
+    # Loops through the user options allocating the expense type
+    while truth != 0:
+        print(f"Welcome to this interactive expense tracker!\nPlease select an option below:\n1. Add "
+              f"Food Expenses\n2. Household expenses\n3. Travel Expenses\n4. Display and Save the "
+              f"Expense Report\n0. Exit\n")
+
+        truth = int(input(f"Please select an option: "))
+
+        if truth == 0:
+            exit(f"Thank you for using the expense tracker, have a good day!")
+        elif truth == 1:
+            print(f"Adding food items to the list...")
+            expense_types = "Food"
+        elif truth == 2:
+            print(f"Adding household items to the list...")
+            expense_types = "Household"
+        elif truth == 3:
+            print(f"Adding travel costs to the list...")
+            expense_types = "Travel"
+        elif truth == 4:
+            report_data()
+        else:
+            print(f"Error: Please type 0 - 4 only...")
+
+        # Let the user input the data they want to save
+        if truth == 1 or truth == 2 or truth == 3:
+            goods_or_services = str(input(f"Enter the {expense_types} items or services:\n"))
+            price = float(input(f"Enter the price of the {goods_or_services}:\n$"))
+            now = datetime.now()
+            date_time = now.strftime("%m/%d/%Y %H:%M:%S %p")
+            adding_data(goods_or_services, price, date_time, expense_types)
+
+
+def report_data() -> df:
+    """
+    Creates the dataframes, putting it into a file, create an array to hold all the prices then adding them. Read from
+    the file and put all the finalised data into a bar graph
+
+    Args:
+
+    Returns:
+        DataFrame as df : created the dataframe from pandas to store and display the user data in table format
+    """
+
+    # Creating the dataframe
     report = df()
-    report["GoodsOfServices"] = GoodsOrServices
-    report["Prices"] = Prices
-    report["Dates"] = Dates
-    report["ExpenseType"] = ExpenseType
+    report["GOODS_OR_SERVICES"] = GOODS_OR_SERVICES
+    report["PRICES"] = PRICES
+    report["DATES"] = DATES
+    report["EXPENSE_TYPES"] = EXPENSE_TYPES
+
+    # Save the data to a file
     report.to_csv("Expenses.csv")
+    # Show the data
+    print(f"Your current expenses are\n{report}")
 
-    # creating an array to loop through the data and pull the data for each section
-    FoodP = []
-    HouseP = []
-    TravelP = []
+    # Creating an array to loop through the prices
+    Food_Price: list = []
+    House_Price: list = []
+    Travel_Price: list = []
 
-    # reads the file that was created above
-    with open("Expenses.csv"):
-        read_csv("Expenses.csv", skiprows=1)
+    # Reading the expenses file
+    read_csv("Expenses.csv", skiprows=1)
 
-    for _ in enumerate(report):
-        if expenseType == "Food":
-            Prices.append(FoodP)
-        elif expenseType == "Household":
-            Prices.append(HouseP)
-        elif expenseType == "Travel":
-            Prices.append(TravelP)
-        elif _:
-            print(f"Error: Something went wrong!")
+    # Looping through the new lists
 
-    # putting the data into a graph
-    plt.plot(report)
-    plt.legend()
+    # Putting the data into a graph
+    x_values = [1, 2, 3, 4]
+    y_values = [5, 4, 7, 9]
+
+    plt.bar(x_values, y_values)
+    plt.title("Expenses")
+    plt.xlabel("Category")
+    plt.ylabel("Prices")
     plt.show()
 
     return report
-
-
-def main():
-    # option menu for the user
-    truth: int = 1
-    user: str = (input(f"Please enter your name: "))
-
-    while truth != 0:
-        options = int(
-            input(f"Welcome {user} to this interactive expense tracker!\nPlease select an option below:\n1. Add "
-                  f"Food Expenses\n2. Household expenses\n3. Travel Expenses\n4. Display and Save the "
-                  f"Expense Report\n0. Exit\nPlease enter the choice here: "))
-
-        match options:
-            case 0:
-                exit(f"Thank you for using the Expense Tracker. See you next time!")
-            case 1:
-                print(f"Adding Food\n")
-                expenseType = "Food"
-            case 2:
-                print(f"Adding Household\n")
-                expenseType = "Household"
-            case 3:
-                print(f"Adding Travel\n")
-                expenseType = "Travel"
-            case 4:
-                reportData()
-
-        # lets the user enter the data
-        if options == 1 or options == 2 or options == 3:
-            goodsOrservices = str(input(f"Enter the goods or services for the expense type {expenseType}:\n")).strip()
-            price = float(input(f"Enter the price of the goods or service:\n"))
-            today = date.today()
-            addingData(goodsOrservices, price, today, expenseType)
 
 
 if __name__ == "__main__":

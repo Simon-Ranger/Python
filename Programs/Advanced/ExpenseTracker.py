@@ -13,7 +13,7 @@ displayed in a file and the terminal.
 
 # Imports required
 from pandas import DataFrame as df, read_csv
-# import numpy as np
+import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 
@@ -115,19 +115,26 @@ def report_data() -> df:
     # Show the data
     print(f"Your current expenses are\n{report}")
 
-    # Creating an array to loop through the prices
-    Food_Price: list = []
-    House_Price: list = []
-    Travel_Price: list = []
+    # Creating an array of the prices
+    Food_Price = np.array([])
+    House_Price = np.array([])
+    Travel_Price = np.array([])
+
+    # Appending the empty list
+    report["Food_Price"] = Food_Price.tolist()
+    report["House_Price"] = House_Price.tolist()
+    report["Travel_Price"] = Travel_Price.tolist()
+
+    # Adding the prices together
+    cost = np.sum(Food_Price, House_Price, Travel_Price)
+    print(f"Your total cost of expenses are:\n{cost}")
 
     # Reading the expenses file
     read_csv("Expenses.csv", skiprows=1)
 
-    # Looping through the new lists
-
     # Putting the data into a graph
-    x_values = [1, 2, 3, 4]
-    y_values = [5, 4, 7, 9]
+    x_values = ["Food", "Household", "Travel"]
+    y_values = [Food_Price, House_Price, Travel_Price]
 
     plt.bar(x_values, y_values)
     plt.title("Expenses")

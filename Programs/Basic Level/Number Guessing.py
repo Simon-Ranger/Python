@@ -12,36 +12,57 @@ Desired Output:
 If working correctly the user should get a hint for every wrong answer until they get it right or lose
 the game.
 """
+
+# Imports required
 import random
 
 
 # The rules to the game
-def rules():
+def rules() -> None:
+    """
+    Explains to the user the rules of the game
+
+    Args:
+
+    Returns:
+        None
+    """
+
+    # Displays the rules to the user
     print(f"How to Play:\n1. Guess a number between 1 and 10\n2. Follow the hints given if guess was wrong\n"
           f"3. After 4 fails you lose the game")
 
 
-def game():
+def game() -> None:
+    """
+    Asks the user if they want to remove a specific contact or not
+
+    Args:
+
+    Returns:
+        None
+    """
+
     # Welcomes the user
     print(f"Welcome to my Number Guessing game!")
 
     # Setting the max number
-    highest = 10
+    highest: int = 10
 
     # Setting a limit amount of tries
-    limit = 3
+    limit: int = 3
 
     # Setting the answer
-    ans = random.randrange(1, highest)
-    user = 0
-    count = 0
+    ans: int = random.randrange(1, highest)
+    user: int = 0
+    count: int = 0
 
     # Running the game
     while user != ans:
         user = int(input('Please enter a number: '))
 
         if count == limit:
-            exit(print(f"Sorry you have no more tries left"))
+            exit(f"Sorry you have no more tries left")
         elif user == ans:
             print(f"Congratulations, you got it! The answer was {user}")
             break
@@ -54,6 +75,7 @@ def game():
             count = count + 1
 
 
-# Calling rules and game
-rules()
-game()
+if __name__ == "__main__":
+    # Calling rules and game
+    rules()
+    game()

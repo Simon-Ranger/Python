@@ -2,13 +2,21 @@
 
 """
 This is a VERY basic dice game where the user can try and guess what the dice will roll
+
+How to Play:
+1. Run the script
+2. Follow the prompts
+
+Desired Output:
+The user should be able to have 5 rolls of the dice against the computer with the results being displayed at the end
 """
 
+# Imports required
 import random
 
 # Setting the players score
-user = 0
-computer = 0
+user: int = 0
+computer: int = 0
 
 # Rolling the dice 5 times
 for i in range(5):

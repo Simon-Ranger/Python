@@ -12,14 +12,19 @@ To have a random generated story appear each time the script is run, but using u
 story.
 """
 
+# Imports required
 import random
 
 if __name__ == "__main__":
+    # The starting sentence
     startingSentence = f"Many years ago there was a "
+
+    # The users part of the story
     story = [input("Enter a character for the story: "),
              input("Enter what the character is doing: "), input("Enter what time or period it is: "),
              input("Enter how old the character is: "), input("Enter where the story takes place: ")]
 
+    # Mixes the input into random stories
     random.shuffle(story)
 
     print(f"Your created story is...\n{startingSentence}")

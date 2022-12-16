@@ -11,20 +11,30 @@ Desired Output:
 Grabs the specified information from the specified job site, giving the results in the output as well as an Excel file.
 """
 
-# Imports
+# Imports required
 from requests import get
 from bs4 import BeautifulSoup as bs
 from contextlib import suppress as sr
 from pandas import DataFrame as df
 
 
-def extract(page):
+def extract(pages: int) -> bs:
+    """
+    Asks the user if they want to remove a specific contact or not
+
+    Args:
+        pages: int: gets the specific amount of pages
+
+    Returns:
+        BeautifulSoup as bs: handles the html parser
+    """
+
     # Grabs the user agents being used
     headers = {f"User Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
                               "Chrome/108.0.0.0 Safari/537.36"}
     # Sets the website being scraped
     url = f"https://www.jobkorea.co.kr/Search/?stext=english&local=N000&focusTab=&focusGno=40303904&tabType=recruit" \
-          f"&Page_No={page}"
+          f"&Page_No={pages}"
 
     # Grabs the url and header, letting data be taken
     request = get(url, headers)

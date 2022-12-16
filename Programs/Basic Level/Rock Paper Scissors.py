@@ -13,6 +13,7 @@ if wanting can go to the real site and actually order it on there.
 NOTE: the game print design was not me, found it online somewhere and liked it.
 """
 
+# Imports required
 import random
 
 
@@ -49,9 +50,11 @@ while True:
     userChoice = int(input("Select your choice:\n0 = rock\n1 = paper\n2 = scissors\n"))
     print(f"{images[userChoice]}")
 
+    # Randomises the number for the computer choice
     compChoice = random.randint(0, 2)
     print(f"The computer chose:\n{images[compChoice]}")
 
+    # Checks the user input against the computers choice
     if userChoice >= 3 or userChoice < 0: print(f"Invalid number...automatic loss!")
     elif userChoice == 0 and compChoice == 1: print(f"Comp Wins!!!")
     elif compChoice == 0 and userChoice == 1: print(f"You Won!!!")

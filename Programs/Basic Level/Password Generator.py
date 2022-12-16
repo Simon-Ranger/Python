@@ -8,9 +8,10 @@ How to Use:
 1. Run the script
 
 Desired Output:
-To have a random generated passwords appear each time the script is run.
+To have a random generated passwords between 16 and 124 characters appear each time the script is run.
 """
 
+# Imports required
 import random
 import string
 

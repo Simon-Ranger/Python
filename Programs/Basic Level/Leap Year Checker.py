@@ -13,5 +13,9 @@ To determine if the year given is a leap year or not.
 if __name__ == "__main__":
     date = int(input("Please enter a year: "))
 
-    print(f"{date} is a leap year!") if date % 4 == 0 else print(f"{date} is not a leap year!")
+    if date % 400 == 0 or date % 100 != 0 and date % 4 == 0:
+        print(f"{date} is a leap year")
+    else:
+        print(f"{date}, is not a leap year")
+
 

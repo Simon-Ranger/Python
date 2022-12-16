@@ -20,22 +20,23 @@ from PIL import Image, ImageTk
 import webbrowser
 import requests
 
-# The url the app will connect to
-url = "https://www.pizzahut.co.kr/"
-# Initiates the code
-pizza = tk.Tk()
-# Title of the app
-pizza.title("Welcome to the Pizza Hut App")
-# Size of the window
-pizza.geometry("400x500")
-# Colour of the background for the app
-pizza.configure(background="red")
-
 
 # Lets the app open the url
-def open_url(event):
+def open_url() -> None:
+    """
+    Connects and opens the url
+
+    Args:
+
+    Returns:
+        None
+    """
+
     webbrowser.open_new_tab(url)
 
+
+# Initiates the code
+pizza = tk.Tk()
 
 # Button to direct you to the url
 button = tk.Button(pizza, text="Click here for the real site!")
@@ -101,7 +102,7 @@ def messageBoard():
 
 # Sets the class for customer
 class Person:
-    def __init__(self, name, number=None, address=None):
+    def __init__(self, name, number=None, address=None) -> None:
         self.name = name
         self.number = number
         self.address = address
@@ -137,6 +138,16 @@ photo3 = ImageTk.PhotoImage(image3)
 image3 = tk.Label(image=photo3)
 image3.grid(column=0, row=6, padx=(5, 95))
 
-# Lets the app run properly and binds the button to connect to the internet
-button.bind("<Button-1>", open_url)
-pizza.mainloop()
+if __name__ == "__main__":
+    # The url the app will connect to
+    url = "https://www.pizzahut.co.kr/"
+    # Title of the app
+    pizza.title("Welcome to the Pizza Hut App")
+    # Size of the window
+    pizza.geometry("400x500")
+    # Colour of the background for the app
+    pizza.configure(background="red")
+
+    # Lets the app run properly and binds the button to connect to the internet
+    button.bind("<Button-1>", open_url)
+    pizza.mainloop()

@@ -12,8 +12,8 @@ displayed in a file and the terminal.
 """
 
 # Imports required
-from pandas import DataFrame as df, read_csv
 import numpy as np
+import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 
@@ -57,18 +57,20 @@ def main() -> None:
         None
     """
     # Creating the main menu
-    truth = -1
 
     # Loops through the user options allocating the expense type
+    name = str(input(f"Please enter your name: "))
+    truth = 1
+
     while truth != 0:
-        print(f"Welcome to this interactive expense tracker!\nPlease select an option below:\n1. Add "
+        print(f"Welcome {name} to this interactive expense tracker!\nPlease select an option below:\n1. Add "
               f"Food Expenses\n2. Household expenses\n3. Travel Expenses\n4. Display and Save the "
               f"Expense Report\n0. Exit\n")
 
         truth = int(input(f"Please select an option: "))
 
         if truth == 0:
-            exit(f"Thank you for using the expense tracker, have a good day!")
+            exit(f"Thank you {name} for using the expense tracker, have a good day!")
         elif truth == 1:
             print(f"Adding food items to the list...")
             expense_types = "Food"
@@ -86,13 +88,13 @@ def main() -> None:
         # Let the user input the data they want to save
         if truth == 1 or truth == 2 or truth == 3:
             goods_or_services = str(input(f"Enter the {expense_types} items or services:\n"))
-            price = float(input(f"Enter the price of the {goods_or_services}:\n$"))
+            price = float(input(f"Enter the price of the {goods_or_services}:\n₩"))
             now = datetime.now()
             date_time = now.strftime("%m/%d/%Y %H:%M:%S %p")
             adding_data(goods_or_services, price, date_time, expense_types)
 
 
-def report_data() -> df:
+def report_data() -> pd.DataFrame:
     """
     Creates the dataframes, putting it into a file, create an array to hold all the prices then adding them. Read from
     the file and put all the finalised data into a bar graph
@@ -104,7 +106,7 @@ def report_data() -> df:
     """
 
     # Creating the dataframe
-    report = df()
+    report = pd.DataFrame()
     report["GOODS_OR_SERVICES"] = GOODS_OR_SERVICES
     report["PRICES"] = PRICES
     report["DATES"] = DATES
@@ -115,22 +117,10 @@ def report_data() -> df:
     # Show the data
     print(f"Your current expenses are\n{report}")
 
-    # Creating an array of the prices
-    Food_Price = np.array([])
-    House_Price = np.array([])
-    Travel_Price = np.array([])
-
-    # Appending the empty list
-    report["Food_Price"] = Food_Price.tolist()
-    report["House_Price"] = House_Price.tolist()
-    report["Travel_Price"] = Travel_Price.tolist()
-
-    # Adding the prices together
-    cost = np.sum(Food_Price, House_Price, Travel_Price)
-    print(f"Your total cost of expenses are:\n{cost}")
-
-    # Reading the expenses file
-    read_csv("Expenses.csv", skiprows=1)
+    # Calculates the total sum of the cost
+    Food_Price = np.sum(report["PRICES"][report["EXPENSE_TYPES"] == "Food"])
+    House_Price = np.sum(report["PRICES"][report["EXPENSE_TYPES"] == "Household"])
+    Travel_Price = np.sum(report["PRICES"][report["EXPENSE_TYPES"] == "Travel"])
 
     # Putting the data into a graph
     x_values = ["Food", "Household", "Travel"]
@@ -139,7 +129,7 @@ def report_data() -> df:
     plt.bar(x_values, y_values)
     plt.title("Expenses")
     plt.xlabel("Category")
-    plt.ylabel("Prices")
+    plt.ylabel("Prices(₩)")
     plt.show()
 
     return report

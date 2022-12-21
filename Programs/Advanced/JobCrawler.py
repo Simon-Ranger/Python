@@ -11,7 +11,6 @@ Desired Output:
 Grabs the specified information from the specified job site, giving the results in the output as well as an Excel file.
 """
 
-# Imports required
 from requests import get
 from bs4 import BeautifulSoup as bs
 from contextlib import suppress as sr
@@ -44,6 +43,16 @@ def extract(pages: int) -> bs:
 
 
 def transform(soup):
+    """
+    Asks the user if they want to remove a specific contact or not
+
+    Args:
+        pages: int: gets the specific amount of pages
+
+    Returns:
+        BeautifulSoup as bs: handles the html parser
+    """
+
     # Runs an exception check
     with sr(Exception):
         # Finds all the divs under the class "post" within the url

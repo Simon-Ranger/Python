@@ -15,7 +15,7 @@ Grabs the specified information from the specified site, giving the results in t
 import httpx
 from selectolax.parser import HTMLParser
 from dataclasses import dataclass, asdict
-from contextlib import suppress as sr
+import pandas as pd
 
 
 @dataclass
@@ -24,6 +24,13 @@ class Data:
     single_price: str
     kg_price: str
     overall_price: str
+
+
+def check_if_exist(node: any) -> str:
+    try:
+        return node.text()
+    except:
+        return ""
 
 
 def get_html(page: int) -> HTMLParser:
@@ -53,20 +60,20 @@ def parse_products(html) -> list:
         list: holds the data
     """
 
-    products = html.css("div")
+    # section.sc-a9838a83-0.fKaGJk <- this highlights the whole product (image, title, price info)
+    products = html.css("section.sc-a9838a83-0.fKaGJk")
+    # products = html.css("section.product-tile") # <- this is the data-test id
     results = []
 
-    # loops through an exception to catch any errors while collecting the specified data
-    with sr(Exception):
-        for item in products:
-            new_item = Data(
-                item_name=item.css_first("h2").text(),
-                single_price=item.css_first("div.price").text(),
-                kg_price=item.css_first("span.price__calculation_method").text(),
-                overall_price=item.css_first("span.price__calculation_method__description").text()
-            )
+    for item in products:
+        new_item = Data(
+            item_name=check_if_exist(item.css_first("h2")),
+            single_price=check_if_exist(item.css_first("div.price")),
+            kg_price=check_if_exist(item.css_first("span.price__calculation_method")),
+            overall_price=check_if_exist(item.css_first("span.price__calculation_method__description"))
+        )
+        results.append(asdict(new_item))
 
-            results.append(asdict(new_item))
     return results
 
 
@@ -81,11 +88,9 @@ def main() -> None:
         None
     """
 
-    # loops through an exception while also looping through the pages
-    with sr(Exception):
-        for i in range(1, 16):
-            html = get_html(i)
-            print(parse_products(html))
+    for i in range(1, 16):
+        html = get_html(i)
+        list(map(print, parse_products(html)))
 
 
 if __name__ == "__main__":
